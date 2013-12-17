@@ -6,14 +6,19 @@ lines = [line.strip('\n') for line in open(fileName)]
 allStrings = []
 
 import re
-regex = re.compile("[',',':']")
+separatorRegex = re.compile("[,:]")
 
 for line in lines:
-  stringsInLine = regex.split(line)
+  line = re.sub('[0-9?.~]', '', line)
+  stringsInLine = separatorRegex.split(line)
   for string in stringsInLine:
-    allStrings.append(string.strip())
+    strippedString = string.strip()
+    if len(strippedString) > 0:
+      allStrings.append(strippedString)
 
 uniqueStrings = sorted(set(allStrings))
 
+i = 1
 for uniqueString in uniqueStrings:
-  print(uniqueString)
+  print(str(i) + '. ' + uniqueString)
+  i += 1
